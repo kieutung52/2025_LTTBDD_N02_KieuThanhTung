@@ -1,0 +1,102 @@
+[
+  {
+    "vocabulary": "run",
+    "level": "A1",
+    "transcription_uk": "/rʌn/",
+    "transcription_us": "/rʌn/",
+    "details": [
+      {
+        "type": "VERB",
+        "meaning": "chạy",
+        "explanation": "Di chuyển nhanh bằng chân, sao cho cả hai chân đều rời khỏi mặt đất trong một khoảnh khắc.",
+        "example": "I run every morning to stay healthy."
+      },
+      {
+        "type": "NOUN",
+        "meaning": "một cuộc chạy bộ, một dòng chảy",
+        "explanation": "Hành động chạy hoặc một chuỗi, một loạt sự kiện diễn ra.",
+        "example": "She went for a run in the park."
+      }
+    ]
+  },
+  {
+    "vocabulary": "book",
+    "level": "A1",
+    "transcription_uk": "/bʊk/",
+    "transcription_us": "/bʊk/",
+    "details": [
+      {
+        "type": "NOUN",
+        "meaning": "quyển sách",
+        "explanation": "Một tập hợp các tờ giấy được in có chữ viết hoặc hình ảnh, được đóng lại với nhau trong một bìa.",
+        "example": "He is reading an interesting book."
+      },
+      {
+        "type": "VERB",
+        "meaning": "đặt trước, giữ chỗ",
+        "explanation": "Hành động đăng ký hoặc giữ chỗ trước cho một thứ gì đó (phòng khách sạn, vé máy bay, bàn ăn).",
+        "example": "I need to book a flight to Hanoi."
+      }
+    ]
+  },
+  {
+    "vocabulary": "set",
+    "level": "A2",
+    "transcription_uk": "/set/",
+    "transcription_us": "/set/",
+    "details": [
+      {
+        "type": "NOUN",
+        "meaning": "bộ, tập hợp",
+        "explanation": "Một nhóm các vật phẩm tương tự hoặc có liên quan với nhau.",
+        "example": "She bought a new set of dishes."
+      },
+      {
+        "type": "VERB",
+        "meaning": "đặt, để, thiết lập",
+        "explanation": "Đặt một cái gì đó ở một vị trí cụ thể hoặc làm cho một cái gì đó bắt đầu hoạt động.",
+        "example": "Please set the plates on the table."
+      },
+      {
+        "type": "ADJECTIVE",
+        "meaning": "cố định, được định sẵn",
+        "explanation": "Ở trong một trạng thái cố định, không thay đổi, hoặc đã sẵn sàng.",
+        "example": "The rules are set and cannot be changed."
+      }
+    ]
+  },
+  {
+    "vocabulary": "happy",
+    "level": "A1",
+    "transcription_uk": "/ˈhæpi/",
+    "transcription_us": "/ˈhæpi/",
+    "details": [
+      {
+        "type": "ADJECTIVE",
+        "meaning": "vui vẻ, hạnh phúc",
+        "explanation": "Cảm thấy hoặc thể hiện sự hài lòng và vui sướng.",
+        "example": "She looks very happy today."
+      }
+    ]
+  },
+  {
+    "vocabulary": "water",
+    "level": "A1",
+    "transcription_uk": "/ˈwɔːtə(r)/",
+    "transcription_us": "/ˈwɑːtər/",
+    "details": [
+      {
+        "type": "NOUN",
+        "meaning": "nước",
+        "explanation": "Một chất lỏng trong suốt, không màu, không mùi, là thành phần chính của sông, hồ, đại dương và cơ thể sống.",
+        "example": "You should drink plenty of water."
+      },
+      {
+        "type": "VERB",
+        "meaning": "tưới nước",
+        "explanation": "Hành động tưới nước cho cây cối hoặc thực vật.",
+        "example": "Don't forget to water the plants."
+      }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "title": "Reading Comprehension: The History of Coffee",
+  "type": "READING_COMPREHENSION",
+  "level": "B1",
+  "document": "Coffee was first discovered in Ethiopia in the 11th century. Legend says a goat herder named Kaldi noticed his goats became energetic after eating berries from a certain tree...",
+  "questions": [
+    {
+      "id": "q1",
+      "questionType": "MULTIPLE_CHOICE",
+      "questionText": "Where was coffee first discovered?",
+      "options": [
+        "Brazil",
+        "Ethiopia",
+        "Colombia",
+        "Vietnam"
+      ],
+      "correctAnswer": "Ethiopia"
+    },
+    {
+      "id": "q2",
+      "questionType": "MULTIPLE_CHOICE",
+      "questionText": "According to the legend, who first noticed the effects of coffee berries?",
+      "options": [
+        "A king",
+        "A merchant",
+        "A goat herder",
+        "A monk"
+      ],
+      "correctAnswer": "A goat herder"
+    },
+    {
+      "id": "q3",
+      "questionType": "OPEN_ENDED",
+      "questionText": "Based on the text, summarize in one sentence why Kaldi's goats became energetic.",
+      "instruction": "Your answer should be a complete sentence.",
+      "keywordsForGrading": ["goats", "energetic", "eating", "berries"]
+    }
+  ]
+}

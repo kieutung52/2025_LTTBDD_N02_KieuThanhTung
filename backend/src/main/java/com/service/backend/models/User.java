@@ -1,5 +1,6 @@
 package com.service.backend.models;
 
+import java.util.Date;
 import java.util.Set;
 
 import com.service.backend.DTO.enumdata.RoleAccount;
@@ -13,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +29,10 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private String ID;
-    @Column(name = "fullname", unique = true, nullable = false, length = 50)
+    
+    @Column(name = "fullname", unique = false, nullable = false, length = 50)
     private String fullName;
 
     @Column(name = "email", unique = true, nullable = false, length = 100)
@@ -40,6 +44,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
     private RoleAccount role;
+
+    @Builder.Default
+    @Column(name = "streak", nullable = false)
+    private int streak = 0;
+
+    @Column(name = "last_streak_active_date")
+    @Temporal(TemporalType.DATE)
+    private Date lastStreakActiveDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DictionaryPersonal> personalDictionaries;

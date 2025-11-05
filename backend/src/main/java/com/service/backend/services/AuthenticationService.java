@@ -85,7 +85,7 @@ public class AuthenticationService {
                 .issueTime(new Date())
                 .expirationTime(new Date (
                                             Instant.now()
-                                                .plus(1, ChronoUnit.HOURS)
+                                                .plus(6, ChronoUnit.HOURS)
                                                 .toEpochMilli()
                                         )
                                 )

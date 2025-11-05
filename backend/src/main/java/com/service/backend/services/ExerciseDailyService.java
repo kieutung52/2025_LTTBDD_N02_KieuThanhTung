@@ -1,17 +1,26 @@
 package com.service.backend.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.service.backend.DTO.DataTransform.request.exercise.ExerciseDailyRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.service.backend.DTO.DataTransform.response.exercise.ExerciseDailyResponseDTO;
 import com.service.backend.DTO.enumdata.ExerciseType;
 import com.service.backend.models.ExerciseDaily;
+import com.service.backend.models.ExerciseDetails;
+import com.service.backend.models.User;
 import com.service.backend.repository.ExerciseDailyRepository;
-
+import com.service.backend.repository.ExerciseDetailsRepository;
+import com.service.backend.services.ExerciseGenerationService.ExerciseQuiz;
 
 @Service
 public class ExerciseDailyService {
@@ -19,7 +28,13 @@ public class ExerciseDailyService {
     private ExerciseDailyRepository exerciseDailyRepository;
 
     @Autowired
+    private ExerciseDetailsRepository exerciseDetailsRepository;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Transactional(readOnly = true)
     public List<ExerciseDaily> getAllExerciseDailys() {
@@ -27,25 +42,84 @@ public class ExerciseDailyService {
     }
 
     @Transactional(readOnly = true)
-    public ExerciseDaily getExerciseDailyById(int id) {
+    public ExerciseDaily getExerciseDailyById(Long id) {
         return exerciseDailyRepository.findById(id).orElse(null);
     }
 
-    // Create or Update
     @Transactional
-    public ExerciseDaily saveExerciseDaily(ExerciseDailyRequest exerciseDaily) {
-        return exerciseDailyRepository.save(ExerciseDaily.builder()
-                .user(userService.getUserById(exerciseDaily.getUserID()))
+    public ExerciseDailyResponseDTO saveExerciseDaily(ExerciseQuiz exerciseRequest, String userId) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("User not found: " + userId);
+        }
+
+        ExerciseDaily entity = ExerciseDaily.builder()
+                .user(user)
                 .date(LocalDateTime.now())
-                .totalQuestions(exerciseDaily.getTotalQuestions())
-                .correctAnswers(exerciseDaily.getCorrectAnswers())
-                .analytics(exerciseDaily.getAnalytics())
-                .exerciseType(ExerciseType.valueOf(exerciseDaily.getExerciseType()))
-                .build());
+                .totalQuestions(exerciseRequest.getQuestions().size())
+                .exerciseType(ExerciseType.valueOf(exerciseRequest.getType()))
+                .build();
+        
+        ExerciseDaily savedSummary = exerciseDailyRepository.save(entity);
+        
+        List<ExerciseDetails> detailEntities = exerciseRequest.getQuestions().stream().map(dr -> {
+            ExerciseDetails detail = ExerciseDetails.builder()
+                .exDaily(savedSummary)
+                .question(dr.getQuestionText())
+                .trueAnswer(dr.getCorrectAnswer())
+                .questionType(dr.getQuestionType())
+                .build();
+            
+            // Sửa lỗi type safety với TypeReference
+            if (dr.getOptions() != null && !dr.getOptions().isEmpty()) {
+                try {
+                    String optionsJson = objectMapper.writeValueAsString(dr.getOptions());
+                    detail.setOptions(optionsJson);
+                } catch (JsonProcessingException e) {
+                    detail.setOptions("[]");
+                }
+            } else {
+                detail.setOptions("[]");
+            }
+            
+            return detail;
+        }).collect(Collectors.toList());
+        
+        List<ExerciseDetails> savedDetails = exerciseDetailsRepository.saveAll(detailEntities);
+        ExerciseDailyResponseDTO response = new ExerciseDailyResponseDTO(savedSummary, savedDetails);
+
+        // Cập nhật streak
+        updateUserStreak(user, savedSummary.getDate().toLocalDate());
+
+        return response;
+    }
+
+    private void updateUserStreak(User user, LocalDate exerciseDate) {
+        boolean streakWasReset = false;
+
+        if (user.getLastStreakActiveDate() != null) {
+            LocalDate lastDate = user.getLastStreakActiveDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            
+            if (lastDate.equals(exerciseDate.minusDays(1))) {
+                user.setStreak(user.getStreak() + 1);
+            } else if (!lastDate.isEqual(exerciseDate)) {
+                user.setStreak(1);
+                streakWasReset = true;
+            }
+        } else {
+            user.setStreak(1);
+        }
+        
+        if (!streakWasReset || user.getLastStreakActiveDate() == null) {
+            user.setLastStreakActiveDate(Date.from(exerciseDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            userService.saveUser(user);
+        }
     }
 
     @Transactional
-    public boolean deleteExerciseDaily(int id) {
+    public boolean deleteExerciseDaily(Long id) {
         try {
             exerciseDailyRepository.deleteById(id);
             return true;
@@ -53,5 +127,10 @@ public class ExerciseDailyService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExerciseDaily> getResultsByDate(String userId, LocalDate date) {
+        return exerciseDailyRepository.findByUserIdAndDate(userId, date);
     }
 }

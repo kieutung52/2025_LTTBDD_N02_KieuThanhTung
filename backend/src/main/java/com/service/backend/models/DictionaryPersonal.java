@@ -23,7 +23,7 @@ public class DictionaryPersonal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private int ID;
+    private Long ID;
     
     @ManyToOne
     @JoinColumn(

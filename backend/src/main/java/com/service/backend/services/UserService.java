@@ -30,7 +30,6 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    // Create or Update
     @Transactional
     public User saveUser(User user) {
         return userRepository.save(user);
@@ -44,5 +43,10 @@ public class UserService {
                 .result(true)
                 .message("User "+ id + " deleted successfully")
                 .build();
+    }
+
+    @Transactional
+    public void updateStreak(User user) {
+        saveUser(user); 
     }
 }

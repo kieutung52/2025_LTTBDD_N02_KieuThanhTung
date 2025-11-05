@@ -2,6 +2,7 @@ package com.service.backend.models;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.service.backend.DTO.enumdata.ExerciseType;
 
 import jakarta.persistence.Column;
@@ -27,8 +28,9 @@ public class ExerciseDaily {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private int ID;
+    private Long ID;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
         name = "user_id", 
@@ -43,7 +45,7 @@ public class ExerciseDaily {
     @Column(name = "total_questions", nullable = false)
     private int totalQuestions;
 
-    @Column(name = "correct_answers", nullable = false)
+    @Column(name = "correct_answers", nullable = true)
     private int correctAnswers;
 
     @Enumerated(EnumType.STRING)

@@ -15,7 +15,7 @@ import com.service.backend.repository.VocabularyDetailsRepository;
 @Service
 public class VocabularyDetailsService {
     private final VocabularyDetailsRepository vocabularyDetailsRepository;
-    private DictionaryService dictionaryService;
+    private final DictionaryService dictionaryService;
 
     public VocabularyDetailsService(VocabularyDetailsRepository vocabularyDetailsRepository,
             DictionaryService dictionaryService) {
@@ -64,7 +64,7 @@ public class VocabularyDetailsService {
                 vocabularyDetailsRepository.save(updatedDetails);
                 return true;
             } else {
-                return false; // Details not found
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +77,6 @@ public class VocabularyDetailsService {
         if (dictionaryID == null) {
             return List.of();
         }
-        // Dùng phương thức repository chuyên dụng để tránh NPE và load thừa
         return vocabularyDetailsRepository.findByDictionary_Id(dictionaryID);
     }
 
@@ -97,7 +96,7 @@ public class VocabularyDetailsService {
                 continue;
             }
             List<VocabularyDetails> saved = findAllVocabularyDetails(dictionary.getId());
-            if (saved != null) continue;
+            if (saved != null && !saved.isEmpty()) continue;
             for (VocabularyDetailData detail : detailDatas) {
                 VocabularyDetails newEntity = new VocabularyDetails(dictionary, 
                                                                     detail.getType(), 
@@ -107,7 +106,6 @@ public class VocabularyDetailsService {
                 toSave.add(newEntity);
             }
         }
-        // save all collected details (single transaction)
         vocabularyDetailsRepository.saveAll(toSave);
     }
 }

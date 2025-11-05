@@ -9,11 +9,16 @@ import com.service.backend.DTO.geminipattern.GeminiRequest;
 import com.service.backend.DTO.geminipattern.GeminiResponse;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class GeminiService {
-    private String apiKey = "AIzaSyAtgfr9dFtCd6QjZZkpv5iaegMdfGsGY-s";
-
+    private String[] allApiKey = {
+        ""
+    };
+    
+    private final AtomicInteger index = new AtomicInteger(0);
+    
     private String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     private final RestTemplate restTemplate;
@@ -24,6 +29,8 @@ public class GeminiService {
 
     public String getGeminiResponse(String prompt) {
         try {
+            String currentApiKey = allApiKey[index.getAndIncrement() % allApiKey.length];
+            System.out.println("Using api key: " + currentApiKey);
             GeminiRequest.Part part = new GeminiRequest.Part(prompt);
             GeminiRequest.Content content = new GeminiRequest.Content(List.of(part));
             GeminiRequest request = new GeminiRequest(List.of(content));
@@ -31,16 +38,15 @@ public class GeminiService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // Nếu apiKey có dạng access token (ví dụ "ya29.") dùng Bearer, ngược lại chuyền ?key=
-            if (apiKey != null && apiKey.startsWith("ya29.")) {
-                headers.setBearerAuth(apiKey);
+            if (currentApiKey != null && currentApiKey.startsWith("ya29.")) {
+                headers.setBearerAuth(currentApiKey);
             }
 
             HttpEntity<GeminiRequest> entity = new HttpEntity<>(request, headers);
 
             String url = apiUrl;
-            if (apiKey != null && !apiKey.isEmpty() && !apiKey.startsWith("ya29.")) {
-                url = apiUrl + (apiUrl.contains("?") ? "&" : "?") + "key=" + apiKey;
+            if (currentApiKey != null && !currentApiKey.isEmpty() && !currentApiKey.startsWith("ya29.")) {
+                url = apiUrl + (apiUrl.contains("?") ? "&" : "?") + "key=" + currentApiKey;
             }
 
             ResponseEntity<GeminiResponse> response = restTemplate.exchange(
@@ -57,7 +63,6 @@ public class GeminiService {
 
             return body.getCandidates().get(0).getContent().getParts().get(0).getText();
         } catch (HttpClientErrorException he) {
-            // show response body to debug 400/404/401
             throw new RuntimeException("Lỗi khi gọi Gemini API: " + he.getStatusCode() + ": " + he.getResponseBodyAsString(), he);
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi gọi Gemini API: " + e.getMessage(), e);

@@ -16,4 +16,6 @@ public interface DictionaryRepository extends JpaRepository<Dictionary, Long> {
     @Query("SELECT d FROM Dictionary d WHERE d.level = 'A1' AND d.id NOT IN " +
            "(SELECT dp.dictionary.id FROM dictionary_personal dp WHERE dp.user.ID = :userId)")
     List<Dictionary> findNewWordsForUser(String userId, Pageable pageable);
+
+    List<Dictionary> findByIdIn(List<Long> ids);
 }

@@ -38,20 +38,20 @@ public class ExerciseController {
     private ExerciseDailyService exerciseDailyService;
 
     @PostMapping("/generate")
-    public ResponseEntity<ApiResponse<Object>> generateExercise(
+    public ResponseEntity<ApiResponse<ExerciseDailyResponseDTO>> generateExercise(
         @RequestBody GenerateExerciseRequestDTO request,
         @AuthenticationPrincipal Jwt jwt
         ) {
         try {
             String userId = jwt.getSubject();
-            Object exerciseJson = exerciseGenerationService.generateExerciseFromWordIds(request.getDictionaryIds(), userId);
-            return ResponseEntity.ok(ApiResponse.<Object>builder()
+            ExerciseDailyResponseDTO exerciseJson = exerciseGenerationService.generateExerciseFromWordIds(request.getDictionaryIds(), userId);
+            return ResponseEntity.ok(ApiResponse.<ExerciseDailyResponseDTO>builder()
                     .success(true)
                     .message("Exercise generated successfully.")
                     .data(exerciseJson) 
                     .build());
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(ApiResponse.<Object>builder()
+            return ResponseEntity.status(500).body(ApiResponse.<ExerciseDailyResponseDTO>builder()
                     .success(false)
                     .message(e.getMessage())
                     .build());

@@ -18,16 +18,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.backend.DTO.DataTransform.request.exercise.GradingRequestDTO;
+import com.service.backend.DTO.DataTransform.response.dictionary.VocabularyForGenerateExercise;
 import com.service.backend.DTO.DataTransform.response.exercise.ExerciseDailyResponseDTO;
 import com.service.backend.DTO.DataTransform.response.exercise.GradingResponseDTO;
-import com.service.backend.models.Dictionary;
 import com.service.backend.models.ExerciseDaily;
 import com.service.backend.models.ExerciseDetails;
-import com.service.backend.models.VocabularyDetails;
-import com.service.backend.repository.DictionaryRepository;
 import com.service.backend.repository.ExerciseDailyRepository;
 import com.service.backend.repository.ExerciseDetailsRepository;
-import com.service.backend.repository.VocabularyDetailsRepository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,10 +39,7 @@ public class ExerciseGenerationService {
     private ExerciseDailyService exerciseDailyService;
 
     @Autowired
-    private DictionaryRepository dictionaryRepository;
-
-    @Autowired
-    private VocabularyDetailsRepository vocabularyDetailsRepository;
+    private DictionaryService dictionaryService;
 
     @Autowired
     private ExerciseDetailsRepository exerciseDetailsRepository;
@@ -89,48 +83,57 @@ public class ExerciseGenerationService {
 
     @Transactional
     public ExerciseDailyResponseDTO generateExerciseFromWordIds(List<Long> dictionaryIds, String userId) {
-        List<Dictionary> dicts = dictionaryRepository.findAllById(dictionaryIds);
+        // Validate input
+        if (dictionaryIds == null || dictionaryIds.isEmpty()) {
+            throw new RuntimeException("Dictionary IDs cannot be null or empty");
+        }
+        
+        List<VocabularyForGenerateExercise> dicts = dictionaryService.findAllVocabularyWithDetails(dictionaryIds);
 
-        List<VocabularyDetails> allDetails = vocabularyDetailsRepository.findByDictionary_IdIn(dictionaryIds);
-
-        Map<Long, String> meaningMap = allDetails.stream()
-            .collect(Collectors.groupingBy(
-                detail -> detail.getDictionary().getId(),
-                Collectors.mapping(VocabularyDetails::getMeaning, Collectors.joining(", ")) // Lấy nghĩa
-            ));
-
-        List<String> wordListWithMeaning = dicts.stream()
-            .map(dict -> {
-                String meaning = meaningMap.getOrDefault(dict.getId(), "N/A");
-                return String.format("%s (nghĩa: %s)", dict.getVocabulary(), meaning);
-            })
-            .collect(Collectors.toList());
-
-        if (wordListWithMeaning.isEmpty()) {
+        if (dicts.isEmpty()) {
             throw new RuntimeException("No valid words found to generate exercise.");
         }
         
+        List<String> wordListWithMeaning = dicts.stream()
+            .map(dict -> String.format("%s (nghĩa: %s)", dict.getVocabulary(), dict.getMeaning()))
+            .collect(Collectors.toList());
+        
         String wordListString = String.join(", ", wordListWithMeaning);
 
-        String prompt = exercisePromptTemplate.replace("${word_list_with_meaning}", wordListString)
-                .replace("Tạo chính xác 5 câu hỏi. Ưu tiên 3 câu \"MULTIPLE_CHOICE\"", "Tạo chính xác 5 câu hỏi \"MULTIPLE_CHOICE\" only.")
-                .replace("2 câu \"OPEN_ENDED\"", "");
+        String prompt = exercisePromptTemplate
+            .replace("${word_list_with_meaning}", wordListString)
+            .replace("Ưu tiên 3 câu \"MULTIPLE_CHOICE\" (chọn nghĩa đúng) và 2 câu \"OPEN_ENDED\" (viết lại câu hoặc điền vào chỗ trống).", 
+                    "Tạo chính xác 5 câu hỏi \"MULTIPLE_CHOICE\" (chọn nghĩa đúng).")
+            .replace("3.  **LOẠI CÂU HỎI:** Tạo chính xác 5 câu hỏi. Ưu tiên 3 câu \"MULTIPLE_CHOICE\" (chọn nghĩa đúng) và 2 câu \"OPEN_ENDED\" (viết lại câu hoặc điền vào chỗ trống).",
+                    "3.  **LOẠI CÂU HỎI:** Tạo chính xác 5 câu hỏi \"MULTIPLE_CHOICE\" (chọn nghĩa đúng).");
 
+        System.out.println("=== PROMPT SENT TO AI ===");
         System.out.println(prompt);
+        System.out.println("=== END PROMPT ===");
+
         String jsonResponse = geminiService.getGeminiResponse(prompt);
+        System.out.println("=== RAW RESPONSE FROM AI ===");
+        System.out.println(jsonResponse);
+        System.out.println("=== END RAW RESPONSE ===");
+        
         String cleanedJson = cleanGeminiResponse(jsonResponse);
 
         try {
             ExerciseQuiz quiz = objectMapper.readValue(cleanedJson, ExerciseQuiz.class);
             return exerciseDailyService.saveExerciseDaily(quiz, userId);
         } catch (JsonProcessingException e) {
+            System.err.println("JSON Parse Error: " + e.getMessage());
+            System.err.println("Cleaned JSON that failed to parse: " + cleanedJson);
             throw new RuntimeException("Failed to parse exercise JSON from Gemini: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Unexpected error during exercise generation: " + e.getMessage());
         }
     }
     
     public GradingResponseDTO gradeExercise(GradingRequestDTO gradingRequest) {
         try {
-            // Lấy thông tin bài tập từ database
             ExerciseDaily exerciseDaily = exerciseDailyService.getExerciseDailyById(gradingRequest.getExerciseDailyId());
             if (exerciseDaily == null) {
                 throw new RuntimeException("Exercise not found with id: " + gradingRequest.getExerciseDailyId());
@@ -138,7 +141,9 @@ public class ExerciseGenerationService {
             
             List<ExerciseDetails> exerciseDetails = exerciseDetailsRepository.findByExDailyID(gradingRequest.getExerciseDailyId());
             
-            // Chuẩn bị dữ liệu cho prompt với type safety
+            Map<Long, String> correctAnswerMap = exerciseDetails.stream()
+                .collect(Collectors.toMap(ExerciseDetails::getID, ExerciseDetails::getTrueAnswer));
+            
             Map<String, Object> exerciseData = new HashMap<>();
             exerciseData.put("exercise", exerciseDetails.stream().map(ed -> {
                 Map<String, Object> questionMap = new HashMap<>();
@@ -147,7 +152,6 @@ public class ExerciseGenerationService {
                 questionMap.put("correctAnswer", ed.getTrueAnswer());
                 questionMap.put("questionType", ed.getQuestionType());
                 
-                // Sửa lỗi type safety với TypeReference
                 if (ed.getOptions() != null && !ed.getOptions().isEmpty()) {
                     try {
                         List<String> options = objectMapper.readValue(
@@ -177,14 +181,21 @@ public class ExerciseGenerationService {
                 .replace("${exercise_data}", exerciseJson)
                 .replace("${student_answers}", answersJson);
 
-            // Gọi Gemini API
+            System.out.println("=== GRADING PROMPT ===");
+            System.out.println(prompt);
+            System.out.println("=== END GRADING PROMPT ===");
+
             String jsonResponse = geminiService.getGeminiResponse(prompt);
             String cleanedJson = cleanGeminiResponse(jsonResponse);
 
-            // Parse kết quả từ Gemini
+            System.out.println("=== GRADING RESPONSE ===");
+            System.out.println(cleanedJson);
+            System.out.println("=== END GRADING RESPONSE ===");
+
             GradingResponseDTO gradingResult = objectMapper.readValue(cleanedJson, GradingResponseDTO.class);
             
-            // Cập nhật kết quả vào database
+            recalculateCorrectAnswers(gradingResult, correctAnswerMap, studentAnswers);
+            
             updateExerciseResults(exerciseDaily, gradingResult);
             
             return gradingResult;
@@ -194,12 +205,40 @@ public class ExerciseGenerationService {
         }
     }
 
+    private void recalculateCorrectAnswers(GradingResponseDTO gradingResult, 
+                                        Map<Long, String> correctAnswerMap,
+                                        Map<String, String> studentAnswers) {
+        int correctCount = 0;
+        
+        for (GradingResponseDTO.QuestionResultDTO result : gradingResult.getResults()) {
+            Long questionId = result.getQuestionId();
+            String userAnswer = studentAnswers.get(questionId.toString());
+            String correctAnswer = correctAnswerMap.get(questionId);
+            
+            boolean isActuallyCorrect = userAnswer != null && 
+                                    correctAnswer != null && 
+                                    userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
+            
+            result.setCorrect(isActuallyCorrect);
+            
+            if (isActuallyCorrect) {
+                correctCount++;
+            }
+            
+            if (isActuallyCorrect && result.getExplanation().contains("chưa chính xác")) {
+                result.setExplanation(result.getExplanation().replace("chưa chính xác", "hoàn toàn chính xác"));
+            }
+        }
+        
+        gradingResult.setCorrectAnswers(correctCount);
+        gradingResult.setTotalQuestions(gradingResult.getResults().size());
+        gradingResult.setScore((double) correctCount / gradingResult.getTotalQuestions() * 100);
+    }
+
     private void updateExerciseResults(ExerciseDaily exerciseDaily, GradingResponseDTO gradingResult) {
-        // Cập nhật tổng điểm cho exercise daily - SỬ DỤNG biến exerciseDaily
         exerciseDaily.setCorrectAnswers(gradingResult.getCorrectAnswers());
         exerciseDailyRepository.save(exerciseDaily);
 
-        // Cập nhật từng câu hỏi
         for (GradingResponseDTO.QuestionResultDTO result : gradingResult.getResults()) {
             ExerciseDetails detail = exerciseDetailsRepository.findById(result.getQuestionId()).orElse(null);
             if (detail != null) {

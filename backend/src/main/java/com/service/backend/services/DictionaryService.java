@@ -1,10 +1,14 @@
 package com.service.backend.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.service.backend.DTO.DataTransform.response.dictionary.VocabularyForGenerateExercise;
 import com.service.backend.DTO.structurejson.VocabularyData;
 import com.service.backend.cache.DictionaryLoader;
 import com.service.backend.models.Dictionary;
@@ -100,5 +104,37 @@ public class DictionaryService {
     @Transactional(readOnly = true)
     public List<VocabularyDetails> findAllVocabularyDetails(Long dictionaryID) {
         return vocabularyDetailsRepository.findByDictionary_Id(dictionaryID);
+    }
+
+    @Transactional(readOnly = true)
+    public List<VocabularyForGenerateExercise> findAllVocabularyWithDetails(List<Long> dictionaryIds) {
+        if (dictionaryIds == null || dictionaryIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        List<Dictionary> dictionaries = dictionaryRepository.findByIdIn(dictionaryIds);
+        
+        List<VocabularyDetails> allDetails = vocabularyDetailsRepository.findByDictionary_IdIn(dictionaryIds);
+        
+        Map<Long, List<VocabularyDetails>> detailsByDictionaryId = allDetails.stream()
+                .collect(Collectors.groupingBy(vd -> vd.getDictionary().getId()));
+        
+        return dictionaries.stream()
+                .map(dict -> {
+                    String voca = dict.getVocabulary();
+                    List<VocabularyDetails> details = detailsByDictionaryId.getOrDefault(dict.getId(), new ArrayList<>());
+                    
+                    // Lấy tất cả meanings
+                    List<String> meanings = details.stream()
+                            .map(VocabularyDetails::getMeaning)
+                            .collect(Collectors.toList());
+                    
+                    String mean = String.join(", ", meanings);
+                    
+                    return VocabularyForGenerateExercise.builder()
+                            .vocabulary(voca)
+                            .meaning(mean)
+                            .build();
+                }).collect(Collectors.toList());
     }
 }

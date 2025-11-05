@@ -98,9 +98,7 @@ public class ExerciseDailyService {
         boolean streakWasReset = false;
 
         if (user.getLastStreakActiveDate() != null) {
-            LocalDate lastDate = user.getLastStreakActiveDate().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+            LocalDate lastDate = convertToLocalDate(user.getLastStreakActiveDate());
             
             if (lastDate.equals(exerciseDate.minusDays(1))) {
                 user.setStreak(user.getStreak() + 1);
@@ -113,9 +111,30 @@ public class ExerciseDailyService {
         }
         
         if (!streakWasReset || user.getLastStreakActiveDate() == null) {
-            user.setLastStreakActiveDate(Date.from(exerciseDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            user.setLastStreakActiveDate(convertToDate(exerciseDate));
             userService.saveUser(user);
         }
+    }
+
+    private LocalDate convertToLocalDate(Date dateToConvert) {
+        if (dateToConvert == null) {
+            return null;
+        }
+        
+        if (dateToConvert instanceof java.sql.Date) {
+            return ((java.sql.Date) dateToConvert).toLocalDate();
+        } else {
+            return dateToConvert.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+        }
+    }
+
+    private Date convertToDate(LocalDate dateToConvert) {
+        if (dateToConvert == null) {
+            return null;
+        }
+        return java.sql.Date.valueOf(dateToConvert);
     }
 
     @Transactional

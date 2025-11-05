@@ -6,5 +6,7 @@ public enum ExerciseType {
     WRITING,
     SPEAKING,
     GRAMMAR,
-    VOCABULARY
+    VOCABULARY,
+    FLASHCARD,
+    MATCHING,
 }

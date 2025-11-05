@@ -9,13 +9,12 @@ import lombok.Data;
 
 @Data
 public class DailyVocabularyDTO {
-    private Long dictionaryPersonalId; // KieuTung.id (bản ghi cá nhân)
-    private Long dictionaryId;         // Dictionary.id (từ chung)
+    private Long dictionaryPersonalId;
+    private Long dictionaryId;
     private String vocabulary;
     private List<VocabularyDetails> details;
     private String transcriptionUs;
     
-    // Constructor để JPA có thể tạo đối tượng này trực tiếp từ query
     public DailyVocabularyDTO(Long dictionaryPersonalId, Long dictionaryId, String vocabulary, String transcriptionUs) {
         this.dictionaryPersonalId = dictionaryPersonalId;
         this.dictionaryId = dictionaryId;

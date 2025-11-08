@@ -1,0 +1,4 @@
+enum RoleAccount {
+  admin,
+  user
+}

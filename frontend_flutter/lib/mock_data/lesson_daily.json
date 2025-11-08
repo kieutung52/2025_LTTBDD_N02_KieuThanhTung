@@ -1,0 +1,722 @@
+{
+    "success": true,
+    "message": "Daily lesson fetched successfully.",
+    "data": [
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "DATERMINER",
+                        "meaning": "một",
+                        "explanation": "Được sử dụng trước một danh từ số ít, đếm được, khi nói về một người hoặc vật không cụ thể, hoặc lần đầu tiên được đề cập.",
+                        "exampleSentence": "I have a cat."
+                    }
+                ],
+                "id": 1459,
+                "vocabulary": "a",
+                "level": "A1",
+                "transcriptionUk": "/ə/",
+                "transcriptionUs": "/ə/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 26
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "PREPOSITION",
+                        "meaning": "về, khoảng",
+                        "explanation": "Liên quan đến một chủ đề hoặc đối tượng; xấp xỉ một số lượng hoặc thời gian.",
+                        "exampleSentence": "Tell me about your trip. It costs about ten dollars."
+                    },
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "gần, xấp xỉ; xung quanh",
+                        "explanation": "Xấp xỉ; gần đúng; hoặc di chuyển quanh một nơi nào đó.",
+                        "exampleSentence": "He's about to leave. There were people standing about."
+                    }
+                ],
+                "id": 1465,
+                "vocabulary": "about",
+                "level": "A1",
+                "transcriptionUk": "/əˈbaʊt/",
+                "transcriptionUs": "/əˈbaʊt/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 27
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "hoạt động",
+                        "explanation": "Một hành động cụ thể hoặc một quá trình hành động của một nhóm người.",
+                        "exampleSentence": "We planned many activities for the children."
+                    }
+                ],
+                "id": 1523,
+                "vocabulary": "activity",
+                "level": "A1",
+                "transcriptionUk": "/ækˈtɪvəti/",
+                "transcriptionUs": "/ækˈtɪvəti/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 28
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "diễn viên (nam)",
+                        "explanation": "Một người đàn ông đóng vai trong một vở kịch, phim hoặc chương trình truyền hình.",
+                        "exampleSentence": "My favorite actor won an Oscar last night."
+                    }
+                ],
+                "id": 1524,
+                "vocabulary": "actor",
+                "level": "A1",
+                "transcriptionUk": "/ˈæktə(r)/",
+                "transcriptionUs": "/ˈæktər/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 29
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "VERB",
+                        "meaning": "thêm vào, cộng thêm",
+                        "explanation": "Thêm một cái gì đó vào một cái khác để tăng tổng số hoặc hoàn thiện một cái gì đó.",
+                        "exampleSentence": "Please add some sugar to my coffee."
+                    }
+                ],
+                "id": 1532,
+                "vocabulary": "add",
+                "level": "A1",
+                "transcriptionUk": "/æd/",
+                "transcriptionUs": "/æd/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 30
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADJECTIVE",
+                        "meaning": "sợ hãi, lo sợ",
+                        "explanation": "Cảm thấy sợ hãi hoặc lo lắng; miễn cưỡng làm điều gì đó.",
+                        "exampleSentence": "She is afraid of the dark. I'm afraid I can't help you."
+                    }
+                ],
+                "id": 1572,
+                "vocabulary": "afraid",
+                "level": "A1",
+                "transcriptionUk": "/əˈfreɪd/",
+                "transcriptionUs": "/əˈfreɪd/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 31
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "PREPOSITION",
+                        "meaning": "sau khi",
+                        "explanation": "Trong khoảng thời gian theo sau một sự kiện hoặc thời điểm cụ thể.",
+                        "exampleSentence": "We'll meet after work."
+                    },
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "sau đó",
+                        "explanation": "Vào một thời điểm sau này hoặc tiếp theo.",
+                        "exampleSentence": "He arrived shortly after."
+                    },
+                    {
+                        "vocabType": "CONJUNCTION",
+                        "meaning": "sau khi",
+                        "explanation": "Dùng để giới thiệu một mệnh đề chỉ thời gian, cho biết điều gì đó xảy ra sau một hành động khác.",
+                        "exampleSentence": "She left after she finished her meal."
+                    }
+                ],
+                "id": 1573,
+                "vocabulary": "after",
+                "level": "A1",
+                "transcriptionUk": "/ˈɑːftə(r)/",
+                "transcriptionUs": "/ˈæftər/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 32
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "buổi chiều",
+                        "explanation": "Khoảng thời gian từ trưa đến tối.",
+                        "exampleSentence": "I usually take a nap in the afternoon."
+                    }
+                ],
+                "id": 1575,
+                "vocabulary": "afternoon",
+                "level": "A1",
+                "transcriptionUk": "/ˌɑːftəˈnuːn/",
+                "transcriptionUs": "/ˌæftərˈnuːn/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 33
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "lại, lần nữa",
+                        "explanation": "Một lần nữa; trở lại trạng thái hoặc vị trí trước đó.",
+                        "exampleSentence": "Please say that again. He is well again."
+                    }
+                ],
+                "id": 1577,
+                "vocabulary": "again",
+                "level": "A1",
+                "transcriptionUk": "/əˈɡen/",
+                "transcriptionUs": "/əˈɡen/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 34
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "tuổi, thời đại",
+                        "explanation": "Số năm mà một người hoặc vật đã tồn tại; một giai đoạn cụ thể trong lịch sử hoặc cuộc đời.",
+                        "exampleSentence": "What is your age? We live in the digital age."
+                    },
+                    {
+                        "vocabType": "VERB",
+                        "meaning": "già đi, làm cho già đi",
+                        "explanation": "Trở nên hoặc làm cho ai đó/cái gì đó già hơn hoặc trông già đi.",
+                        "exampleSentence": "He has aged a lot in the last few years. Good wine ages well."
+                    }
+                ],
+                "id": 1579,
+                "vocabulary": "age",
+                "level": "A1",
+                "transcriptionUk": "/eɪdʒ/",
+                "transcriptionUs": "/eɪdʒ/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 35
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "trước đây",
+                        "explanation": "Trong quá khứ, tính từ thời điểm hiện tại.",
+                        "exampleSentence": "She left two hours ago. That was a long time ago."
+                    }
+                ],
+                "id": 1586,
+                "vocabulary": "ago",
+                "level": "A1",
+                "transcriptionUk": "/əˈɡəʊ/",
+                "transcriptionUs": "/əˈɡoʊ/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 36
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "VERB",
+                        "meaning": "đồng ý, chấp thuận",
+                        "explanation": "Có cùng ý kiến hoặc quan điểm; chấp nhận một đề xuất.",
+                        "exampleSentence": "I agree with you. They agreed to meet on Monday."
+                    }
+                ],
+                "id": 1587,
+                "vocabulary": "agree",
+                "level": "A1",
+                "transcriptionUk": "/əˈɡriː/",
+                "transcriptionUs": "/əˈɡriː/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 37
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "INTERJECTION",
+                        "meaning": "à, ồ",
+                        "explanation": "Thán từ dùng để biểu thị nhiều cảm xúc như ngạc nhiên, nhận ra, hoặc thở phào.",
+                        "exampleSentence": "Ah, there you are! Ah, I understand now."
+                    }
+                ],
+                "id": 1591,
+                "vocabulary": "ah",
+                "level": "A1",
+                "transcriptionUk": "/ɑː/",
+                "transcriptionUs": "/ɑː/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 38
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "không khí",
+                        "explanation": "Hỗn hợp khí không màu, không mùi, không vị bao quanh Trái đất mà các sinh vật hít thở.",
+                        "exampleSentence": "The air quality is poor today. Take a deep breath of fresh air."
+                    },
+                    {
+                        "vocabType": "VERB",
+                        "meaning": "phát sóng, thông gió",
+                        "explanation": "Phát một chương trình trên radio hoặc TV; cho phép không khí lưu thông.",
+                        "exampleSentence": "The show will air next month. Please air the room."
+                    }
+                ],
+                "id": 1597,
+                "vocabulary": "air",
+                "level": "A1",
+                "transcriptionUk": "/eə(r)/",
+                "transcriptionUs": "/er/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 39
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "sân bay",
+                        "explanation": "Nơi máy bay cất cánh và hạ cánh, có các tòa nhà cho hành khách và hàng hóa.",
+                        "exampleSentence": "We arrived at the airport two hours early. The airport is very busy today."
+                    }
+                ],
+                "id": 1600,
+                "vocabulary": "airport",
+                "level": "A1",
+                "transcriptionUk": "/ˈeəpɔːt/",
+                "transcriptionUs": "/ˈerpɔːrt/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 40
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "DATERMINER",
+                        "meaning": "tất cả",
+                        "explanation": "Chỉ toàn bộ số lượng hoặc toàn bộ của một nhóm hay một vật.",
+                        "exampleSentence": "All the students passed the exam."
+                    },
+                    {
+                        "vocabType": "PRONOUN",
+                        "meaning": "tất cả (mọi người/vật)",
+                        "explanation": "Dùng để chỉ toàn bộ một nhóm người hoặc vật.",
+                        "exampleSentence": "All is well."
+                    },
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "hoàn toàn, toàn bộ",
+                        "explanation": "Hoàn toàn; toàn bộ; không có gì còn lại.",
+                        "exampleSentence": "He was all alone in the house."
+                    }
+                ],
+                "id": 1612,
+                "vocabulary": "all",
+                "level": "A1",
+                "transcriptionUk": "/ɔːl/",
+                "transcriptionUs": "/ɔːl/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 41
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "hầu như, gần như",
+                        "explanation": "Không hoàn toàn, nhưng rất gần với.",
+                        "exampleSentence": "It's almost time to go home."
+                    }
+                ],
+                "id": 1623,
+                "vocabulary": "almost",
+                "level": "A1",
+                "transcriptionUk": "/ˈɔːlməʊst/",
+                "transcriptionUs": "/ˈɔːlmoʊst/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 42
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "cũng, ngoài ra",
+                        "explanation": "Được dùng để thêm một thông tin hoặc ý tưởng.",
+                        "exampleSentence": "She is a great singer, and also a talented dancer."
+                    }
+                ],
+                "id": 1628,
+                "vocabulary": "also",
+                "level": "A1",
+                "transcriptionUk": "/ˈɔːlsəʊ/",
+                "transcriptionUs": "/ˈɔːlsoʊ/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 43
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "luôn luôn, thường xuyên",
+                        "explanation": "Vào mọi lúc; mọi khi.",
+                        "exampleSentence": "I always brush my teeth before bed."
+                    }
+                ],
+                "id": 1634,
+                "vocabulary": "always",
+                "level": "A1",
+                "transcriptionUk": "/ˈɔːlweɪz/",
+                "transcriptionUs": "/ˈɔːlweɪz/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 44
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "CONJUNCTION",
+                        "meaning": "và",
+                        "explanation": "Dùng để nối hai từ, cụm từ, mệnh đề hoặc câu có ý nghĩa bổ sung hoặc liên quan.",
+                        "exampleSentence": "He likes coffee and tea."
+                    }
+                ],
+                "id": 1655,
+                "vocabulary": "and",
+                "level": "A1",
+                "transcriptionUk": "/ənd/, /æn/",
+                "transcriptionUs": "/ənd/, /æn/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 45
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "động vật, con vật",
+                        "explanation": "Một sinh vật sống có khả năng cảm nhận và di chuyển, nhưng không phải con người hoặc thực vật.",
+                        "exampleSentence": "Many animals live in the forest."
+                    }
+                ],
+                "id": 1661,
+                "vocabulary": "animal",
+                "level": "A1",
+                "transcriptionUk": "/ˈænɪml/",
+                "transcriptionUs": "/ˈænɪml/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 46
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "DATERMINER",
+                        "meaning": "một cái khác, một người khác",
+                        "explanation": "Thêm một cái nữa, hoặc một cái khác ngoài những cái đã được đề cập.",
+                        "exampleSentence": "Can I have another cup of tea?"
+                    },
+                    {
+                        "vocabType": "PRONOUN",
+                        "meaning": "một người/cái khác",
+                        "explanation": "Một người hoặc vật bổ sung ngoài những người hoặc vật đã có.",
+                        "exampleSentence": "Some people like to work alone, others prefer to work with another."
+                    }
+                ],
+                "id": 1673,
+                "vocabulary": "another",
+                "level": "A1",
+                "transcriptionUk": "/əˈnʌðə(r)/",
+                "transcriptionUs": "/əˈnʌðər/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 47
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "NOUN",
+                        "meaning": "câu trả lời, lời giải đáp",
+                        "explanation": "Một phản hồi bằng lời nói hoặc văn bản cho một câu hỏi, hoặc một giải pháp cho một vấn đề.",
+                        "exampleSentence": "I need an answer to my question."
+                    },
+                    {
+                        "vocabType": "VERB",
+                        "meaning": "trả lời, đáp lại",
+                        "explanation": "Phản hồi một câu hỏi, cuộc gọi điện thoại hoặc một lá thư.",
+                        "exampleSentence": "Please answer the phone."
+                    }
+                ],
+                "id": 1674,
+                "vocabulary": "answer",
+                "level": "A1",
+                "transcriptionUk": "/ˈɑːnsə(r)/",
+                "transcriptionUs": "/ˈænsər/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 48
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "DATERMINER",
+                        "meaning": "bất kỳ, một chút nào (trong câu hỏi hoặc phủ định)",
+                        "explanation": "Được sử dụng để chỉ số lượng hoặc mức độ không xác định, thường trong các câu hỏi hoặc câu phủ định.",
+                        "exampleSentence": "Do you have any questions? I don't have any money."
+                    },
+                    {
+                        "vocabType": "PRONOUN",
+                        "meaning": "bất cứ cái gì/ai",
+                        "explanation": "Được sử dụng để chỉ một lượng hoặc số lượng không cụ thể.",
+                        "exampleSentence": "Take any you like."
+                    },
+                    {
+                        "vocabType": "ADVERB",
+                        "meaning": "một chút nào (trong câu hỏi, phủ định, so sánh)",
+                        "explanation": "Được dùng để nhấn mạnh ý nghĩa của 'một chút nào', thường đi với tính từ hoặc trạng từ trong câu hỏi hoặc phủ định.",
+                        "exampleSentence": "Is that any better?"
+                    }
+                ],
+                "id": 1678,
+                "vocabulary": "any",
+                "level": "A1",
+                "transcriptionUk": "/ˈeni/",
+                "transcriptionUs": "/ˈeni/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 49
+        },
+        {
+            "dictionary": {
+                "details": [
+                    {
+                        "vocabType": "PRONOUN",
+                        "meaning": "bất kỳ ai, bất cứ ai",
+                        "explanation": "Bất kỳ người nào; được sử dụng trong câu hỏi, phủ định hoặc sau \"if\".",
+                        "exampleSentence": "Is there anybody home? I didn't see anybody."
+                    }
+                ],
+                "id": 1680,
+                "vocabulary": " anybody",
+                "level": "A1",
+                "transcriptionUk": "/ˈenibɒdi/",
+                "transcriptionUs": "/ˈenibɑːdi/",
+                "audioUrlUk": null,
+                "audioUrlUs": null
+            },
+            "lookupCount": 18,
+            "practiceCount": 0,
+            "correctAnswerCount": 0,
+            "incorrectAnswerCount": 0,
+            "lastReviewDate": "2025-11-04",
+            "nextReviewDate": "2025-11-04",
+            "id": 50
+        }
+    ]
+}

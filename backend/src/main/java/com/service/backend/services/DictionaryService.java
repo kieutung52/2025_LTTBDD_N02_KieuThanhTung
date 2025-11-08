@@ -124,7 +124,6 @@ public class DictionaryService {
                     String voca = dict.getVocabulary();
                     List<VocabularyDetails> details = detailsByDictionaryId.getOrDefault(dict.getId(), new ArrayList<>());
                     
-                    // Lấy tất cả meanings
                     List<String> meanings = details.stream()
                             .map(VocabularyDetails::getMeaning)
                             .collect(Collectors.toList());

@@ -11,6 +11,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
@@ -23,7 +24,7 @@ import lombok.Data;
 @Entity
 @AllArgsConstructor
 @Builder
-@Table(name = "vocabulary_details")
+@Table(name = "vocabulary_details", indexes = {@Index(name = "idx_dict_id", columnList = "vocabulary_id")})
 public class VocabularyDetails {
 
     @Id

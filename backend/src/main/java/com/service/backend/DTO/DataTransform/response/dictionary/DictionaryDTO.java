@@ -1,5 +1,7 @@
 package com.service.backend.DTO.DataTransform.response.dictionary;
 
+import java.util.List;
+
 import com.service.backend.DTO.enumdata.VocabularyLevel;
 import com.service.backend.models.Dictionary;
 
@@ -14,8 +16,9 @@ public class DictionaryDTO {
     private String transcriptionUs;
     private String audioUrlUk;
     private String audioUrlUs;
+    private List<VocabularyDetailDTO> details;
 
-    public DictionaryDTO(Dictionary entity) {
+    public DictionaryDTO(Dictionary entity, List<VocabularyDetailDTO> details) {
         this.id = entity.getId();
         this.vocabulary = entity.getVocabulary();
         this.level = entity.getLevel();
@@ -23,5 +26,6 @@ public class DictionaryDTO {
         this.transcriptionUs = entity.getTranscriptionUs();
         this.audioUrlUk = entity.getAudioUrlUk();
         this.audioUrlUs = entity.getAudioUrlUs();
+        this.details = details;
     }
 }

@@ -193,7 +193,7 @@ public class ExerciseGenerationService {
             System.out.println("=== END GRADING RESPONSE ===");
 
             GradingResponseDTO gradingResult = objectMapper.readValue(cleanedJson, GradingResponseDTO.class);
-            
+            gradingResult.setExerciseDailyId(exerciseDaily.getID());
             recalculateCorrectAnswers(gradingResult, correctAnswerMap, studentAnswers);
             
             updateExerciseResults(exerciseDaily, gradingResult);

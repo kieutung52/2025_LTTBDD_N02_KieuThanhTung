@@ -2,7 +2,12 @@ package com.service.backend.services;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.util.StopWatch;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -15,11 +20,15 @@ import com.service.backend.DTO.DataTransform.request.dictionary.DictionaryPerson
 import com.service.backend.DTO.DataTransform.request.learning.UpdateProgressRequest;
 import com.service.backend.DTO.DataTransform.request.learning.WordProgressDTO;
 import com.service.backend.DTO.DataTransform.response.dictionary.DictionaryPersonalDTO;
+import com.service.backend.DTO.DataTransform.response.dictionary.VocabularyDetailDTO;
+import com.service.backend.DTO._mapper.VocabularyDetailsMapper;
 import com.service.backend.models.Dictionary;
 import com.service.backend.models.DictionaryPersonal;
 import com.service.backend.models.User;
+import com.service.backend.models.VocabularyDetails;
 import com.service.backend.repository.DictionaryPersonalRepository;
 import com.service.backend.repository.DictionaryRepository;
+import com.service.backend.repository.VocabularyDetailsRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
@@ -31,6 +40,8 @@ public class DictionaryPersonalService {
     private final UserService userService;
     private final DictionaryService dictionaryService;
     private final DictionaryRepository dictionaryRepository;
+    private final VocabularyDetailsRepository vocabularyDetailsRepository;
+    private final VocabularyDetailsMapper vocabularyDetailsMapper;
 
     @NonFinal
     private static final int DAILY_LESSON_SIZE = 25;
@@ -71,20 +82,18 @@ public class DictionaryPersonalService {
         return dictionaryPersonalRepository.findById(id).orElse(null);
     }
 
-    @Transactional
-    public List<DictionaryPersonalDTO> getDailyLesson(String userId) { // <-- THAY ĐỔI KIỂU TRẢ VỀ
+    @Transactional(readOnly = true)
+    public List<DictionaryPersonalDTO> getDailyLesson(String userId) {
+        StopWatch watch = new StopWatch("getDailyLesson");
         LocalDateTime now = LocalDateTime.now();
-
-        // Query này (nhờ Bước 1) đã fetch sẵn Dictionary và User
         List<DictionaryPersonal> reviewWords = dictionaryPersonalRepository.findWordsForReview(
-            userId, 
-            now, 
+            userId,
+            now,
             Pageable.unpaged()
         );
-
         int newWordsNeeded = DAILY_LESSON_SIZE - reviewWords.size();
         List<DictionaryPersonal> finalLessonList = new ArrayList<>(reviewWords);
-
+        
         if (newWordsNeeded > 0) {
             Pageable limitNewWords = PageRequest.of(0, newWordsNeeded);
             List<Dictionary> newDictionaries = dictionaryRepository.findNewWordsForUser(userId, limitNewWords);
@@ -93,7 +102,6 @@ public class DictionaryPersonalService {
             if (currentUser == null) {
                 throw new RuntimeException("User not found: " + userId);
             }
-
             List<DictionaryPersonal> newPersonalWords = newDictionaries.stream().map(dict -> {
                 return DictionaryPersonal.builder()
                         .user(currentUser)
@@ -102,14 +110,13 @@ public class DictionaryPersonalService {
                         .practiceCount(0)
                         .correctAnswerCount(0)
                         .incorrectAnswerCount(0)
-                        .intervalInDays(1) 
+                        .intervalInDays(1)
                         .lastReviewDate(now)
-                        .nextReviewDate(now) 
+                        .nextReviewDate(now)
                         .build();
             }).collect(Collectors.toList());
-            
+        
             dictionaryPersonalRepository.saveAll(newPersonalWords);
-            
             finalLessonList.addAll(newPersonalWords);
         }
         
@@ -118,10 +125,44 @@ public class DictionaryPersonalService {
         }
         dictionaryPersonalRepository.saveAll(finalLessonList);
         
-        return finalLessonList.stream()
-            .limit(DAILY_LESSON_SIZE)
-            .map(DictionaryPersonalDTO::new)
-            .collect(Collectors.toList());
+        watch.start("extractIds");
+        List<Long> dictionaryIds = new ArrayList<>();
+        for (DictionaryPersonal dp : finalLessonList) {
+            dictionaryIds.add(dp.getDictionary().getId());
+        }
+        watch.stop();
+        System.out.println(dictionaryIds);
+
+        watch.start("queryDetails");
+        List<VocabularyDetails> allDetails = vocabularyDetailsRepository.findDetailsByVocabularyIdInNative(dictionaryIds);
+        watch.stop();
+        watch.start("grouping");
+        Map<Long, List<VocabularyDetails>> detailsByDictId = new HashMap<>();
+        for (VocabularyDetails vd : allDetails) {
+            Long dictId = vd.getDictionary().getId();
+            detailsByDictId.computeIfAbsent(dictId, k -> new ArrayList<>()).add(vd);
+        }
+        watch.stop();
+
+        watch.start("mappingDTOs");
+        List<DictionaryPersonalDTO> result = new ArrayList<>();
+        int limit = Math.min(finalLessonList.size(), DAILY_LESSON_SIZE);
+        for (int i = 0; i < limit; i++) {
+            DictionaryPersonal data = finalLessonList.get(i);
+            Long dictId = data.getDictionary().getId();
+            List<VocabularyDetails> detailsForThis = detailsByDictId.getOrDefault(dictId, Collections.emptyList());
+            
+            List<VocabularyDetailDTO> detailsDTOs = new ArrayList<>();
+            for (VocabularyDetails vd : detailsForThis) {
+                detailsDTOs.add(vocabularyDetailsMapper.toVocabularyDetailDTO(vd));
+            }
+            
+            result.add(new DictionaryPersonalDTO(data, detailsDTOs));
+        }
+        watch.stop();
+        System.out.println("Performance: " + watch.prettyPrint());
+
+        return result;
     }
 
     @Transactional
@@ -165,7 +206,6 @@ public class DictionaryPersonalService {
                 word.setIntervalInDays(1);
                 word.setNextReviewDate(now.plusDays(1));
             }
-            // ---------------------------------------------
             
             wordsToUpdate.add(word);
         }

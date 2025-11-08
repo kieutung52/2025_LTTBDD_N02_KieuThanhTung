@@ -35,8 +35,6 @@ public class LearningController {
                 .build());
     }
 
-    // ======================================
-    // Can review
     @PostMapping("/progress")
     public ResponseEntity<ApiResponse<Void>> updateProgress(
             @AuthenticationPrincipal Jwt jwt,

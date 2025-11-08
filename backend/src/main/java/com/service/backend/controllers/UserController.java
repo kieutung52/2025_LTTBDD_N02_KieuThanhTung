@@ -10,7 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.service.backend.DTO.DataTransform.ApiResponse;
 import com.service.backend.DTO.DataTransform.response.user.UserResponse;
@@ -50,9 +55,7 @@ public class UserController {
                     streakWasReset = true;
                 }
             } else {
-                LocalDate lastActiveLocalDate = lastActiveDate.toInstant()
-                                                  .atZone(ZoneId.systemDefault())
-                                                  .toLocalDate();
+                LocalDate lastActiveLocalDate = convertToLocalDate(lastActiveDate);
                 LocalDate yesterday = today.minusDays(1);
 
                 if (!lastActiveLocalDate.isEqual(today) && !lastActiveLocalDate.isEqual(yesterday)) {
@@ -66,6 +69,7 @@ public class UserController {
             }
 
             UserResponse userResponse = userMapper.toUserResponse(user);
+            userResponse.setCurrentDate(convertToDate(today));
 
             return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
                     .success(true).data(userResponse).build());
@@ -73,6 +77,27 @@ public class UserController {
             return ResponseEntity.status(500).body(ApiResponse.<UserResponse>builder()
                     .success(false).message(e.getMessage()).build());
         }
+    }
+
+    private LocalDate convertToLocalDate(Date dateToConvert) {
+        if (dateToConvert == null) {
+            return null;
+        }
+        
+        if (dateToConvert instanceof java.sql.Date) {
+            return ((java.sql.Date) dateToConvert).toLocalDate();
+        } else {
+            return dateToConvert.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+        }
+    }
+
+    private Date convertToDate(LocalDate dateToConvert) {
+        if (dateToConvert == null) {
+            return null;
+        }
+        return java.sql.Date.valueOf(dateToConvert);
     }
 
     @PutMapping("/profile")
@@ -98,5 +123,15 @@ public class UserController {
             return ResponseEntity.status(500).body(ApiResponse.<UserResponse>builder()
                     .success(false).message(e.getMessage()).build());
         }
-    }  
+    } 
+    
+    @PostMapping("/update-streak")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ApiResponse<String>> updateStreakUser(@AuthenticationPrincipal Jwt jwt) {
+        String userID = jwt.getSubject();
+
+        return ResponseEntity.ok().body(ApiResponse.<String>builder()
+            .data("Streak cua ban hien tai la " + userService.updateStreak(userID) + " .Hãy cố gắng giữ lửa vào ngày mai nhé")
+            .build());
+    }
 }

@@ -1,5 +1,8 @@
 package com.service.backend.DTO.DataTransform.response.user;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 import com.service.backend.DTO.enumdata.RoleAccount;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +18,6 @@ public class UserResponse {
     private String fullName;
     private RoleAccount role;
     private int streak;
+    private Date lastStreakActiveDate;
+    private Date currentDate = java.sql.Date.valueOf(LocalDate.now());
 }

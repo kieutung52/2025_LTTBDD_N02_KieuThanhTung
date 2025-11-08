@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +22,7 @@ public class ExerciseDailyResponseDTO {
     private int totalQuestions;
     private int correctAnswers;
     private ExerciseType exerciseType;
-    private LocalDateTime date;
+    private LocalDate date;
     private String analytics;
     private List<ExerciseDetailResponseDTO> details;
 
@@ -31,7 +31,7 @@ public class ExerciseDailyResponseDTO {
         this.totalQuestions = entity.getTotalQuestions(); 
         this.correctAnswers = entity.getCorrectAnswers(); 
         this.exerciseType = entity.getExerciseType(); 
-        this.date = entity.getDate(); 
+        this.date = entity.getDate().toLocalDate(); 
         this.analytics = entity.getAnalytics(); 
     }
 

@@ -86,7 +86,9 @@ public class ExerciseController {
         List<ExerciseDaily> results = exerciseDailyService.getResultsByDate(userId, date);
 
         List<ExerciseDailyResponseDTO> dtos = results.stream()
-            .map(ExerciseDailyResponseDTO::new)
+            .map(data -> {
+                return new ExerciseDailyResponseDTO(data, exerciseDailyService.getExerciseDetailsByExId(data.getID()));
+            })
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(ApiResponse.<List<ExerciseDailyResponseDTO>>builder()

@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+    @Mapping(target = "currentDate", ignore = true)
     UserResponse toUserResponse(User user);
 
     @Mapping(target = "registered", ignore = true)

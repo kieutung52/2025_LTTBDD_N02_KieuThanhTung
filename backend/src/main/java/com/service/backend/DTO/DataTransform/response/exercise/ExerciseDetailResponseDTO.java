@@ -35,7 +35,6 @@ public class ExerciseDetailResponseDTO {
         this.isCorrect = entity.isCorrect();
         this.aiExplain = entity.getAiExplain();
         
-        // Sửa lỗi type safety với TypeReference
         if (entity.getOptions() != null && !entity.getOptions().isEmpty()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();

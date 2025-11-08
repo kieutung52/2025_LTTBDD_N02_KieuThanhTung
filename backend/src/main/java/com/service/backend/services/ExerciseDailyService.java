@@ -70,7 +70,6 @@ public class ExerciseDailyService {
                 .questionType(dr.getQuestionType())
                 .build();
             
-            // Sửa lỗi type safety với TypeReference
             if (dr.getOptions() != null && !dr.getOptions().isEmpty()) {
                 try {
                     String optionsJson = objectMapper.writeValueAsString(dr.getOptions());
@@ -88,7 +87,7 @@ public class ExerciseDailyService {
         List<ExerciseDetails> savedDetails = exerciseDetailsRepository.saveAll(detailEntities);
         ExerciseDailyResponseDTO response = new ExerciseDailyResponseDTO(savedSummary, savedDetails);
 
-        // Cập nhật streak
+        // update streak
         updateUserStreak(user, savedSummary.getDate().toLocalDate());
 
         return response;
@@ -151,5 +150,10 @@ public class ExerciseDailyService {
     @Transactional(readOnly = true)
     public List<ExerciseDaily> getResultsByDate(String userId, LocalDate date) {
         return exerciseDailyRepository.findByUserIdAndDate(userId, date);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExerciseDetails> getExerciseDetailsByExId(Long exId) {
+        return exerciseDetailsRepository.findByExDailyID(exId);
     }
 }

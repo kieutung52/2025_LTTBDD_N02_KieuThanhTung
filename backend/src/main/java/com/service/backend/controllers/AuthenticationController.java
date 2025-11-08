@@ -22,6 +22,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody RegisterRequest request) {
         try {
+            System.out.println(request.getPassword());
             RegisterResponse response = authService.RegisterNewAccount(request);
             return ResponseEntity.ok(ApiResponse.<RegisterResponse>builder()
                     .success(true).message("Registration successful.").data(response).build());

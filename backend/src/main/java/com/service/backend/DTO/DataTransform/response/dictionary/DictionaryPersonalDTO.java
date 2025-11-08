@@ -1,6 +1,6 @@
 package com.service.backend.DTO.DataTransform.response.dictionary;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 import com.service.backend.models.DictionaryPersonal;
 
@@ -14,17 +14,17 @@ public class DictionaryPersonalDTO {
     private int practiceCount;
     private int correctAnswerCount;
     private int incorrectAnswerCount;
-    private LocalDateTime lastReviewDate;
-    private LocalDateTime nextReviewDate;
+    private LocalDate lastReviewDate;
+    private LocalDate nextReviewDate;
 
-    public DictionaryPersonalDTO(DictionaryPersonal entity) {
+    public DictionaryPersonalDTO(DictionaryPersonal entity, List<VocabularyDetailDTO> details) {
         this.ID = entity.getID();
-        this.dictionary = new DictionaryDTO(entity.getDictionary());
+        this.dictionary = new DictionaryDTO(entity.getDictionary(), details);
         this.lookupCount = entity.getLookupCount();
         this.practiceCount = entity.getPracticeCount();
         this.correctAnswerCount = entity.getCorrectAnswerCount();
         this.incorrectAnswerCount = entity.getIncorrectAnswerCount();
-        this.lastReviewDate = entity.getLastReviewDate();
-        this.nextReviewDate = entity.getNextReviewDate();
+        this.lastReviewDate = entity.getLastReviewDate().toLocalDate();
+        this.nextReviewDate = entity.getNextReviewDate().toLocalDate();
     }
 }

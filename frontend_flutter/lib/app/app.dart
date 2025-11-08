@@ -27,7 +27,10 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp.router(
-      title: 'Vocab App',
+      onGenerateTitle: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return l10n.appName;
+      },
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter.router,

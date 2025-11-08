@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:frontend_flutter/l10n/app_localizations.dart';
 
 class ResponsiveShell extends StatefulWidget {
   final Widget child;
@@ -37,12 +38,13 @@ class _ResponsiveShellState extends State<ResponsiveShell> {
 
   Widget _buildDesktopLayout(
       BuildContext context, Widget child, UserResponse user) {
+        final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(LucideIcons.menu, color: AppColors.textSecondary),
-          tooltip: "Thu/gọn menu",
+          tooltip: l10n.toggleMenuTooltip,
           onPressed: () {
             setState(() {
               _isDesktopSidebarExpanded = !_isDesktopSidebarExpanded;
@@ -51,7 +53,7 @@ class _ResponsiveShellState extends State<ResponsiveShell> {
         ),
         backgroundColor: Colors.white,
         elevation: 1.0,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Colors.black.withAlpha((255 * 0.1).round()),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -73,19 +75,20 @@ class _ResponsiveShellState extends State<ResponsiveShell> {
 
   Widget _buildMobileLayout(
       BuildContext context, Widget child, UserResponse user) {
+        final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(LucideIcons.menu, color: AppColors.textSecondary),
-          tooltip: "Mở menu",
+          tooltip: l10n.openMenuTooltip,
           onPressed: () {
             _scaffoldKey.currentState?.openDrawer();
           },
         ),
         backgroundColor: Colors.white,
         elevation: 1.0,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Colors.black.withAlpha((255 * 0.1).round()),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -137,6 +140,7 @@ class _DesktopSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
+    final l10n = AppLocalizations.of(context)!;
 
     return NavigationRail(
       extended: isExpanded,
@@ -150,7 +154,7 @@ class _DesktopSidebar extends StatelessWidget {
             vertical: 20.0, horizontal: isExpanded ? 24.0 : 0),
         child: isExpanded
             ? Text(
-                'EnglishMaster',
+                l10n.appName,
                 style: TextStyle(
                   color: AppColors.primaryBlue,
                   fontSize: 20,
@@ -174,32 +178,32 @@ class _DesktopSidebar extends StatelessWidget {
                   )
                 : IconButton(
                     icon: Icon(LucideIcons.logOut, color: AppColors.error),
-                    tooltip: "Đăng xuất",
+                    tooltip: l10n.logoutButton,
                     onPressed: () => authProvider.logout(),
                   ),
           ),
         ),
       ),
-      destinations: const [
+      destinations: [
         NavigationRailDestination(
           icon: Icon(LucideIcons.house),
-          label: Text('Home'),
+          label: Text(l10n.navHome),
         ),
         NavigationRailDestination(
           icon: Icon(LucideIcons.bookOpen),
-          label: Text('Học'),
+          label: Text(l10n.navLearn),
         ),
         NavigationRailDestination(
           icon: Icon(LucideIcons.clipboardList),
-          label: Text('Bài tập'),
+          label: Text(l10n.navExercise),
         ),
         NavigationRailDestination(
           icon: Icon(LucideIcons.user),
-          label: Text('Hồ sơ'),
+          label: Text(l10n.navProfile),
         ),
         NavigationRailDestination(
           icon: Icon(LucideIcons.search),
-          label: Text('Tra từ'),
+          label: Text(l10n.navSearch),
         ),
       ],
     );
@@ -210,9 +214,8 @@ class _MobileSidebarDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
-    
     final user = authProvider.authenticatedUser;
-
+    final l10n = AppLocalizations.of(context)!;
     
     void navigate(BuildContext context, String route) {
       Navigator.pop(context);
@@ -231,7 +234,7 @@ class _MobileSidebarDrawer extends StatelessWidget {
                     fontSize: 16,
                     color: Colors.white)),
             accountEmail:
-                Text(user.email, style: TextStyle(color: Colors.white.withOpacity(0.8))),
+                Text(user.email, style: TextStyle(color: Colors.white.withAlpha((255 * 0.8).round()))),
             currentAccountPicture: CircleAvatar(
               backgroundColor: AppColors.lightBlue,
               child: Text(
@@ -248,33 +251,33 @@ class _MobileSidebarDrawer extends StatelessWidget {
           ),
           _MobileSidebarTile(
             icon: LucideIcons.house,
-            title: 'Home',
+            title: l10n.navHome,
             onTap: () => navigate(context, '/home'), 
           ),
           _MobileSidebarTile(
             icon: LucideIcons.bookOpen,
-            title: 'Học',
+            title: l10n.navLearn,
             onTap: () => navigate(context, '/learn'), 
           ),
           _MobileSidebarTile(
             icon: LucideIcons.clipboardList,
-            title: 'Bài tập',
+            title: l10n.navExercise,
             onTap: () => navigate(context, '/exercise'), 
           ),
            _MobileSidebarTile(
             icon: LucideIcons.search,
-            title: 'Tra từ',
+            title: l10n.navSearch,
             onTap: () => navigate(context, '/search'), 
           ),
           _MobileSidebarTile(
             icon: LucideIcons.user,
-            title: 'Hồ sơ',
+            title: l10n.navProfile,
             onTap: () => navigate(context, '/profile'), 
           ),
           const Divider(indent: 16, endIndent: 16),
           _MobileSidebarTile(
             icon: LucideIcons.logOut,
-            title: 'Đăng xuất',
+            title: l10n.logoutButton,
             color: AppColors.error,
             onTap: () {
               Navigator.pop(context);
@@ -328,7 +331,7 @@ class _DesktopLogoutButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(12),
-        hoverColor: AppColors.error.withOpacity(0.1),
+        hoverColor: AppColors.error.withAlpha((255 * 0.1).round()),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
